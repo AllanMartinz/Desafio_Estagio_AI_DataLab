@@ -17,6 +17,7 @@ Esta pasta contém a solução utilizando processamento de IA 100% offline via *
   * `requirements.txt`: Lista de dependências Python
 
 ### 2. Extrator_Nuvem
+!!!ao usar colocar uma Google Cloud Express API Key na linha 49 da extracao_nuvem.py!!!
 Esta pasta contém a solução integrada à API pública do **Google Gemini** (modelo Gemini 3.8 Flash).
 * **Uso:** Implementa requisições via internet. Possui algoritmos de tratamento de exceção (Retry e Pausas) para lidar com a instabilidade de conexão e limites de cota da API, mas a execução pode ser mais lenta devido às pausas obrigatórias entre os arquivos.
 * **Arquivos:**
