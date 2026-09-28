@@ -1,0 +1,48 @@
+# Automação de Extração de Dados de Laudos de Avaliação
+
+Este projeto foi desenvolvido como resolução do desafio prático de automação corporativa. O objetivo é processar arquivos de texto contendo laudos de avaliação imobiliária, extrair informações cruciais de forma estruturada utilizando Inteligência Artificial Generativa e consolidar os resultados em um relatório Excel formatado.
+
+Para garantir resiliência e demonstrar flexibilidade de arquitetura, a solução foi dividida em duas abordagens distintas, desenvolvidas em Python 3.13.
+
+## 📂 Estrutura do Projeto
+
+O projeto está organizado em dois módulos independentes de execução:
+
+### 1. Extrator_Local (Recomendado ⭐)
+Esta pasta contém a solução utilizando processamento de IA 100% offline via **Ollama** (modelo Llama 3.2).
+* **Por que é a versão recomendada?** Executar o modelo localmente elimina a dependência de serviços em nuvem, garantindo privacidade total dos dados e contornando os erros frequentes da camada gratuita de APIs públicas, como o Erro 503 (sobrecarga de servidores) e o Erro 429 (limite de requisições excedido). 
+* **Arquivos:**
+  * `extracao_local.py`: Script principal de orquestração, extração e tratamento matemático de datas.
+  * `Executar_Local.bat`: Script de automação (RPA) para ambiente Windows que prepara o ambiente e inicia o processo.
+  * `requirements.txt`: Lista de dependências Python
+
+### 2. Extrator_Nuvem
+Esta pasta contém a solução integrada à API pública do **Google Gemini** (modelo Gemini 3.8 Flash).
+* **Uso:** Implementa requisições via internet. Possui algoritmos de tratamento de exceção (Retry e Pausas) para lidar com a instabilidade de conexão e limites de cota da API, mas a execução pode ser mais lenta devido às pausas obrigatórias entre os arquivos.
+* **Arquivos:**
+  * `extracao_nuvem.py`: Script de integração web e extração.
+  * `Executar_Nuvem.bat`: Executável de automação.
+  * `requirements.txt`: Lista de dependências Python.
+
+---
+
+## 🚀 Como Executar
+
+### Pré-requisitos Gerais
+* **Python 3.13** instalado e configurado nas variáveis de ambiente (PATH) do Windows.
+* Para a versão Local, é necessário ter o [Ollama](https://ollama.com/) instalado na máquina e o modelo previamente baixado via terminal (`ollama pull llama3.2`).
+
+### Passo a Passo
+A maneira mais simples de executar a solução é através dos arquivos de lote (`.bat`). Eles foram configurados para instalar automaticamente as bibliotecas necessárias antes de iniciar o script Python.
+
+1. Navegue até a pasta da versão desejada (`Extrator_Local` ou `Extrator_Nuvem`).
+2. Dê um duplo clique no arquivo `Executar_Local.bat` (ou `Executar_Nuvem.bat`).
+3. O terminal processará os laudos da pasta raiz e gerará o arquivo `Base_Laudos_Extraidos.xlsx` na mesma pasta.
+
+*Nota técnica para desenvolvedores:* Caso prefira rodar via IDE (como PyCharm) criando seu próprio ambiente virtual (`.venv`), instale as dependências executando `pip install -r requirements.txt` dentro da pasta escolhida.
+
+## 🛠️ Tecnologias Utilizadas
+* **Python 3.13:** Linguagem base da automação.
+* **Pandas & Openpyxl:** Tratamento de dados, validação de regras de negócio e exportação para planilhas.
+* **Ollama (Llama 3.2) / Google GenAI:** Processamento de Linguagem Natural para extração de entidades não estruturadas.
+* **Expressões Regulares (Regex):** Lógica matemática programática para cálculo preciso de datas e idades em Python, substituindo alucinações matemáticas da IA.

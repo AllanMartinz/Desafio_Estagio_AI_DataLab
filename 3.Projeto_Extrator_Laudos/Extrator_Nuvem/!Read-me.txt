@@ -1,0 +1,14 @@
+Como rodar o Extrator_Nuvem
+Esta versão é mais leve para o computador, mas exige conexão com a internet para enviar os dados aos servidores da Google.
+
+Instale o Python: Assim como no método local, instale o Python marcando a caixa "Add Python to PATH".
+
+Inicie a Automação:
+
+Abra a pasta Extrator_Nuvem.
+
+Dê um duplo clique em Executar_Nuvem.bat.
+
+O terminal abrirá, validará a conexão, fará o download automático das dependências (pandas, openpyxl, google-genai) e iniciará a leitura dos laudos.
+
+O processo incluirá pausas automáticas entre os arquivos para não ultrapassar a cota do plano gratuito da API, prevenindo os erros 503 e 429.

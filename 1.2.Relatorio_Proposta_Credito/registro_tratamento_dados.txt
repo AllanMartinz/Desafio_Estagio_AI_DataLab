@@ -1,0 +1,63 @@
+### Registro de Tratamento de Dados e Limpeza
+
+**1. Valores Financeiros em Escala Incorreta**
+
+* **Problema Encontrado:** As colunas `valor_imovel`, `valor_solicitado` e `renda_mensal_declarada` apresentavam grandezas irreais (média de imóveis acima de 78 milhões).
+
+
+* **Ação Tomada:** Criei novas colunas dividindo os valores originais por 100.
+* **Justificativa de Negócio:** Os dados foram claramente exportados do banco de dados em centavos. Dividir por 100 recupera o valor real em Reais (R$) sem distorcer o peso financeiro das propostas, permitindo o cálculo correto do funil financeiro.
+
+**2. Coluna LTV Ausente**
+
+* **Problema Encontrado:** A métrica `ltv` (Loan-to-value) estava no dicionário, mas não existia na base.
+
+
+* **Ação Tomada:** Recriei a coluna através do cálculo matemático: `valor_solicitado` ÷ `valor_imovel`.
+* **Justificativa de Negócio:** O LTV é a principal métrica de risco de crédito informada no desafio (limite de 60%). Como as variáveis base existiam e eram confiáveis, a recriação exata foi possível sem inferências, garantindo a análise de risco.
+
+**3. Dados Temporais Ilógicos (Cronologia Impossível)**
+
+* **Problema Encontrado:** A proposta `PR-001556` possuía data de assinatura anterior à data de entrada.
+
+
+* **Ação Tomada:** Remoção deste registro para análises de ciclo de tempo (ou exclusão total da linha).
+* **Justificativa de Negócio:** Datas invertidas indicam corrupção no registro transacional. Manter este dado distorceria métricas de eficiência operacional (tempo médio de análise em dias).
+
+
+
+**4. Etapa do Funil Inexistente**
+
+* **Problema Encontrado:** A proposta `PR-000081` registrava a etapa `7`, violando o limite de 1 a 6 estabelecido pelo negócio.
+
+
+* **Ação Tomada:** Exclusão da linha (drop).
+* **Justificativa de Negócio:** Como não há mapeamento do que significa a "etapa 7", alocar esse valor financeiro em qualquer outra etapa seria um chute, o que comprometeria a precisão do gargalo do funil.
+
+**5. Proponente Menor de Idade**
+
+* **Problema Encontrado:** O registro `PR-000079` apresenta um cliente com 14 anos.
+
+
+* **Ação Tomada:** Exclusão da linha.
+* **Justificativa de Negócio:** Indivíduos de 14 anos não possuem capacidade civil plena para emissão de crédito Home Equity. A proposta representa uma falha no sistema de entrada (validação de front-end) ou fraude, não devendo compor a esteira de projeção financeira.
+
+
+
+**6. Dados Omitidos por Desfecho (Valores Nulos)**
+
+* **Problema Encontrado:** 5.159 registros vazios nas colunas de data de contrato e taxa de juros para propostas que não foram contratadas.
+
+
+* **Ação Tomada:** Manter os valores como nulos (`NaN` no Pandas).
+* **Justificativa de Negócio:** Preencher esses campos vazios com zeros (0) derrubaria artificialmente a média de juros da carteira. Estruturalmente, propostas não formalizadas não geram contrato, portanto a ausência de dados aqui é o comportamento correto do sistema, e não um erro.
+
+
+
+**7. Nomenclatura e Valores de Juros Irreais**
+
+* **Problema Encontrado:** Taxas variando de 10 a 173 (média 121,67), incompatíveis com taxas mensais.
+
+
+* **Ação Tomada:** Isolar a coluna para não a utilizar em cálculos diretos sem antes confirmar com a engenharia de dados.
+* **Justificativa de Negócio:** Assumir se a taxa está multiplicada por 10 ou 100 pode gerar projeções de rentabilidade falsas. Como a missão principal é encontrar o gargalo do funil (onde perde-se o `valor_solicitado`), a coluna de juros não bloqueia o diagnóstico principal.

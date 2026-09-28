@@ -1,0 +1,22 @@
+Como rodar o Extrator_Local
+Esta versão exige a preparação do motor da Inteligência Artificial no computador antes de rodar o código.
+
+Instale o Python: Baixe o instalador oficial do Python e execute-o. Atenção: Na primeira tela de instalação, é obrigatório marcar a caixa "Add Python to PATH" (Adicionar Python ao PATH).
+
+Instale o Ollama: Acesse ollama.com, baixe a versão para Windows e faça a instalação padrão (Next > Next).
+
+Baixe o Modelo de IA:
+
+Pressione a tecla Windows, digite cmd e abra o Prompt de Comando.
+
+Digite o seguinte comando e aperte Enter: ollama pull llama3.2
+
+Aguarde o download do modelo (aproximadamente 2 GB). O terminal avisará quando chegar a 100%.
+
+Inicie a Automação:
+
+Abra a pasta Extrator_Local.
+
+Dê um duplo clique em Executar_Local.bat.
+
+O terminal abrirá, instalará automaticamente as bibliotecas Python necessárias e fará a extração dos laudos utilizando o processamento da própria máquina.
