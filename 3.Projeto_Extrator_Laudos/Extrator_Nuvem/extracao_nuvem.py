@@ -43,7 +43,8 @@ def loading_bar(text, duration=1.0):
     print(f" {Colors.GREEN}OK!{Colors.ENDC}")
 
 # Configuração de log para auditoria
-logging.basicConfig(filename='extracao_nuvem.log', level=logging.INFO, format='%(asctime)s - %(message)s')
+# Configuração de log para auditoria
+logging.basicConfig(filename='extracao_nuvem.log', level=logging.INFO, format='%(asctime)s - %(message)s', encoding='utf-8')
 
 # Insira sua chave de API gerada no Google AI Studio
 GOOGLE_API_KEY = "sua-chave-aqui(retirado a chave por motivos de segurança)"

@@ -1,18 +1,23 @@
+import sys
+import subprocess
+
+# 1. Checa e instala dependências ANTES de qualquer outro import
+dependencies = ['pandas', 'openpyxl', 'matplotlib']
+for dep in dependencies:
+    try:
+        __import__(dep)
+    except ImportError:
+        print(f"Instalando {dep}...")
+        subprocess.check_call([sys.executable, "-m", "pip", "install", dep, "-q"])
+
+# 2. Imports das bibliotecas principais
 import pandas as pd
 import logging
 import os
-import sys
 import time
-import subprocess
 from datetime import datetime
-
-# Tenta importar matplotlib para evitar erro antes do check_dependencies
-try:
-    import matplotlib.pyplot as plt
-    from matplotlib.backends.backend_pdf import PdfPages
-except ImportError:
-    plt = None
-    PdfPages = None
+import matplotlib.pyplot as plt
+from matplotlib.backends.backend_pdf import PdfPages
 
 # --- CONFIGURAÇÕES VISUAIS (Cores ANSI) ---
 class Colors:
@@ -24,7 +29,6 @@ class Colors:
     RED = '\033[91m'
     BOLD = '\033[1m'
     ENDC = '\033[0m'
-
 # 1. CONFIGURAÇÃO DE LOG
 # O log agora é configurado dinamicamente dentro da função gerar_relatorio
 # para garantir que a pasta Relatorios_Gerados exista primeiro.
@@ -53,6 +57,7 @@ def loading_bar(text, duration=1.5):
         sys.stdout.flush()
     print(f" {Colors.GREEN}OK!{Colors.ENDC}")
 
+
 def check_dependencies():
     dependencies = ['pandas', 'openpyxl', 'matplotlib']
     missing = []
@@ -68,8 +73,9 @@ def check_dependencies():
         loading_bar("Instalando bibliotecas")
         try:
             subprocess.check_call([sys.executable, "-m", "pip", "install", *missing, "-q"])
-            # Recarrega matplotlib e PdfPages após a instalação
-            global plt
+
+            # CORREÇÃO AQUI: Incluído PdfPages na declaração global
+            global plt, PdfPages
             import matplotlib.pyplot as plt
             from matplotlib.backends.backend_pdf import PdfPages
         except Exception as e:

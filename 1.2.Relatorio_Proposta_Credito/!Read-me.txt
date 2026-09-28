@@ -1,0 +1,11 @@
+Como rodar o  Gerar_Relatorio.bat
+
+Instale o Python: Assim como no método local (https://www.python.org/downloads/)
+
+Inicie a Automação:
+
+Na a pasta 1.2.Relatorio_Proposta_Credito.
+
+Dê um duplo clique em Gerar_Relatorio.bat.
+
+O terminal abrirá, fará o download automático das dependências e iniciará.
